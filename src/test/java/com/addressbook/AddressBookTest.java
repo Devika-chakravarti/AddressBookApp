@@ -46,4 +46,18 @@ public class AddressBookTest {
 
 		assertEquals(expected, addressBook.toString());
 	}
+
+	@Test
+	void givenExistingContactName_WhenDeleted_ShouldRemoveContactSuccessfully() {
+		ContactPerson person = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(person);
+
+		boolean result = addressBook.deleteContactByName("Devika");
+
+		assertTrue(result);
+		assertEquals("ADDRESS BOOK IS EMPTY", addressBook.toString());
+	}
 }
