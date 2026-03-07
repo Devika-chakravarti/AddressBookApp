@@ -19,8 +19,20 @@ public class AddressBook {
 		return false;
 	}
 
+	public boolean deleteContactByName(String firstName) {
+		if (person != null && person.getFirstName().equalsIgnoreCase(firstName)) {
+			person = null;
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
+		if (person == null) {
+			return "ADDRESS BOOK IS EMPTY";
+		}
+
 		return "ADDRESS BOOK CONTACT DETAILS\n" + "----------------------------\n" + person;
 	}
 }
