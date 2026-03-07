@@ -9,6 +9,16 @@ public class AddressBook {
 		this.person = person;
 	}
 
+	public boolean editContactByName(String firstName, String lastName, String address, String city, String state,
+			String zip, String phoneNumber, String email) {
+
+		if (person != null && person.getFirstName().equalsIgnoreCase(firstName)) {
+			person.updateDetails(lastName, address, city, state, zip, phoneNumber, email);
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "ADDRESS BOOK CONTACT DETAILS\n" + "----------------------------\n" + person;
