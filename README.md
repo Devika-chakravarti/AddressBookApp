@@ -1,16 +1,23 @@
-# AddressBookApp 
+# AddressBookApp - UC1
 
 ## Introduction
-`AddressBookApp` is a progressive Java and Spring Boot based project in which the Address Book system is being built one use case at a time.
+`AddressBookApp` is a progressive Java and Spring Boot based project developed step by step through multiple use cases.
 
-In this use case, the main goal is to create the **ContactPerson** class that represents a single contact in the address book. This class stores all the required details of a person and acts as the base model for the upcoming use cases.
+This README describes the implementation of **UC1**, which is the starting point of the project.
 
-UC1 is important because all later functionalities such as adding a contact, editing a contact, deleting a contact, and managing multiple contacts depend on this contact structure.
+In this use case, the main objective is to create the **ContactPerson** class that represents a single contact in the Address Book. Along with that, the project also includes the basic starter flow using `AddressBookAppApplication` and `AddressBookMain` to display the welcome message.
+
+UC1 is important because it establishes the core contact structure that will be used in all upcoming use cases such as add, edit, delete, and multiple contact management.
 
 ---
 
 ## UC1 Objective
-The objective of UC1 is to design a class that can store the complete information of one contact person in the Address Book.
+The objective of UC1 is:
+
+- to create a `ContactPerson` class
+- to define all required fields of a contact
+- to display a welcome message through `AddressBookMain`
+- to prepare the foundation of the Address Book project using Object-Oriented Programming concepts
 
 The contact should contain the following details:
 
@@ -23,20 +30,19 @@ The contact should contain the following details:
 - Phone Number
 - Email
 
-This use case focuses on creating the basic data structure of the project using Object-Oriented Programming concepts.
-
 ---
 
 ## Problem Statement
-Before performing operations like add, edit, or delete, the project first needs a proper representation of a person’s contact details.
+Before adding, editing, or deleting contacts, the project first needs a proper structure to represent a single person’s contact details.
 
 So in UC1, the task is to:
-- define a `ContactPerson` class
-- include all required fields
-- initialize the object using a constructor
-- display the contact details in a proper format
+- create a `ContactPerson` class
+- include all required contact fields
+- initialize the object properly
+- create the initial starter flow of the application
+- display the welcome message
 
-This is the first step in building a complete Address Book system.
+This use case acts as the first building block of the complete Address Book system.
 
 ---
 
@@ -47,9 +53,11 @@ In this use case, I implemented:
 - private fields for all required contact details
 - a parameterized constructor to initialize object data
 - a `toString()` method to display contact details in formatted form
-- a unit test class to verify the output of the contact object
+- an `AddressBookMain` class to display the welcome message
+- the `AddressBookAppApplication` class to start the Spring Boot application and call `AddressBookMain`
+- a unit test class to verify the output of the `ContactPerson` object
 
-At this stage, the project focuses only on defining the contact entity correctly.
+At this stage, the project mainly focuses on defining the contact model and the initial program flow.
 
 ---
 
@@ -63,6 +71,7 @@ AddressBookApp
 │   │   ├── java
 │   │   │   └── com.addressbook
 │   │   │       ├── AddressBookAppApplication.java
+│   │   │       ├── AddressBookMain.java
 │   │   │       └── model
 │   │   │           └── ContactPerson.java
 │   │   └── resources
