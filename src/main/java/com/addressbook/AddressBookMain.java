@@ -21,37 +21,13 @@ public class AddressBookMain {
 		System.out.println("Existing Contact:");
 		System.out.println(addressBook);
 
-		System.out.print("\nEnter First Name of Contact to Edit: ");
-		String nameToEdit = sc.nextLine();
+		System.out.print("\nEnter First Name of Contact to Delete: ");
+		String nameToDelete = sc.nextLine();
 
-		System.out.println("\nEnter New Details");
+		boolean isDeleted = addressBook.deleteContactByName(nameToDelete);
 
-		System.out.print("Enter Last Name: ");
-		String lastName = sc.nextLine();
-
-		System.out.print("Enter Address: ");
-		String address = sc.nextLine();
-
-		System.out.print("Enter City: ");
-		String city = sc.nextLine();
-
-		System.out.print("Enter State: ");
-		String state = sc.nextLine();
-
-		System.out.print("Enter Zip: ");
-		String zip = sc.nextLine();
-
-		System.out.print("Enter Phone Number: ");
-		String phoneNumber = sc.nextLine();
-
-		System.out.print("Enter Email: ");
-		String email = sc.nextLine();
-
-		boolean isUpdated = addressBook.editContactByName(nameToEdit, lastName, address, city, state, zip, phoneNumber,
-				email);
-
-		if (isUpdated) {
-			System.out.println("\nCONTACT UPDATED SUCCESSFULLY\n");
+		if (isDeleted) {
+			System.out.println("\nCONTACT DELETED SUCCESSFULLY\n");
 			System.out.println(addressBook);
 		} else {
 			System.out.println("\nCONTACT NOT FOUND");
