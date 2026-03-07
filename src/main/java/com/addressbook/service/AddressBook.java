@@ -33,6 +33,10 @@ public class AddressBook {
 		return false;
 	}
 
+	public boolean isEmpty() {
+		return personList.isEmpty();
+	}
+
 	@Override
 	public String toString() {
 		if (personList.isEmpty()) {
