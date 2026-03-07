@@ -22,11 +22,25 @@ public class ContactPerson {
 		this.email = email;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void updateDetails(String lastName, String address, String city, String state, String zip,
+			String phoneNumber, String email) {
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
 		return "First Name   : " + firstName + "\n" + "Last Name    : " + lastName + "\n" + "Address      : " + address
 				+ "\n" + "City         : " + city + "\n" + "State        : " + state + "\n" + "Zip          : " + zip
 				+ "\n" + "Phone Number : " + phoneNumber + "\n" + "Email        : " + email;
 	}
-
 }
