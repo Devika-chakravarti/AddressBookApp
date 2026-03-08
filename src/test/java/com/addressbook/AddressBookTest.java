@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import com.addressbook.model.ContactPerson;
@@ -103,5 +105,28 @@ public class AddressBookTest {
 				+ "----------------------------\n";
 
 		assertEquals(expected, addressBook.toString());
+	}
+
+	@Test
+	void givenMultipleContacts_WhenSortedByName_ShouldReturnAlphabeticalOrder() {
+		ContactPerson person1 = new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com");
+
+		ContactPerson person2 = new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Indore", "Madhya Pradesh",
+				"452010", "9999999999", "ankit@example.com");
+
+		ContactPerson person3 = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(person1);
+		addressBook.addContact(person2);
+		addressBook.addContact(person3);
+
+		List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByName();
+
+		assertEquals("Ankit", sortedPersons.get(0).getFirstName());
+		assertEquals("Devika", sortedPersons.get(1).getFirstName());
+		assertEquals("Rahul", sortedPersons.get(2).getFirstName());
 	}
 }
