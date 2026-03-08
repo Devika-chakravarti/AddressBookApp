@@ -7,8 +7,15 @@ import com.addressbook.model.ContactPerson;
 public class AddressBook {
 	private ArrayList<ContactPerson> personList = new ArrayList<>();
 
-	public void addContact(ContactPerson person) {
+	public boolean addContact(ContactPerson person) {
+		boolean isDuplicate = personList.stream().anyMatch(existingPerson -> existingPerson.equals(person));
+
+		if (isDuplicate) {
+			return false;
+		}
+
 		personList.add(person);
+		return true;
 	}
 
 	public boolean editContactByName(String firstName, String lastName, String address, String city, String state,
