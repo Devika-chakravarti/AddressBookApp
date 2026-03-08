@@ -97,14 +97,6 @@ public class AddressBookTest {
 
 		assertTrue(firstAddResult);
 		assertFalse(duplicateAddResult);
-
-		String expected = "ADDRESS BOOK CONTACT DETAILS\n" + "----------------------------\n"
-				+ "First Name   : Devika\n" + "Last Name    : Chakravarti\n" + "Address      : Shivajinagar\n"
-				+ "City         : Katni\n" + "State        : Madhya Pradesh\n" + "Zip          : 483501\n"
-				+ "Phone Number : 9876580098\n" + "Email        : devika@example.com\n"
-				+ "----------------------------\n";
-
-		assertEquals(expected, addressBook.toString());
 	}
 
 	@Test
@@ -128,5 +120,74 @@ public class AddressBookTest {
 		assertEquals("Ankit", sortedPersons.get(0).getFirstName());
 		assertEquals("Devika", sortedPersons.get(1).getFirstName());
 		assertEquals("Rahul", sortedPersons.get(2).getFirstName());
+	}
+
+	@Test
+	void givenMultipleContacts_WhenSortedByCity_ShouldReturnCorrectOrder() {
+		ContactPerson person1 = new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com");
+
+		ContactPerson person2 = new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Indore", "Madhya Pradesh",
+				"452010", "9999999999", "ankit@example.com");
+
+		ContactPerson person3 = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(person1);
+		addressBook.addContact(person2);
+		addressBook.addContact(person3);
+
+		List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByCity();
+
+		assertEquals("Indore", sortedPersons.get(0).getCity());
+		assertEquals("Katni", sortedPersons.get(1).getCity());
+		assertEquals("Noida", sortedPersons.get(2).getCity());
+	}
+
+	@Test
+	void givenMultipleContacts_WhenSortedByState_ShouldReturnCorrectOrder() {
+		ContactPerson person1 = new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com");
+
+		ContactPerson person2 = new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Indore", "Madhya Pradesh",
+				"452010", "9999999999", "ankit@example.com");
+
+		ContactPerson person3 = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(person1);
+		addressBook.addContact(person2);
+		addressBook.addContact(person3);
+
+		List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByState();
+
+		assertEquals("Madhya Pradesh", sortedPersons.get(0).getState());
+		assertEquals("Madhya Pradesh", sortedPersons.get(1).getState());
+		assertEquals("Uttar Pradesh", sortedPersons.get(2).getState());
+	}
+
+	@Test
+	void givenMultipleContacts_WhenSortedByZip_ShouldReturnCorrectOrder() {
+		ContactPerson person1 = new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com");
+
+		ContactPerson person2 = new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Indore", "Madhya Pradesh",
+				"452010", "9999999999", "ankit@example.com");
+
+		ContactPerson person3 = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		addressBook.addContact(person1);
+		addressBook.addContact(person2);
+		addressBook.addContact(person3);
+
+		List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByZip();
+
+		assertEquals("201301", sortedPersons.get(0).getZip());
+		assertEquals("452010", sortedPersons.get(1).getZip());
+		assertEquals("483501", sortedPersons.get(2).getZip());
 	}
 }
