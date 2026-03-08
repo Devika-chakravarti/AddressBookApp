@@ -2,6 +2,7 @@ package com.addressbook.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.addressbook.model.ContactPerson;
@@ -30,6 +31,16 @@ public class AddressBookSystem {
 	public List<ContactPerson> searchPersonByState(String state) {
 		return addressBookMap.values().stream().flatMap(addressBook -> addressBook.getPersonsByState(state).stream())
 				.collect(Collectors.toList());
+	}
+
+	public Map<String, List<ContactPerson>> viewPersonsByCity() {
+		return addressBookMap.values().stream().flatMap(addressBook -> addressBook.getAllPersons().stream())
+				.collect(Collectors.groupingBy(ContactPerson::getCity));
+	}
+
+	public Map<String, List<ContactPerson>> viewPersonsByState() {
+		return addressBookMap.values().stream().flatMap(addressBook -> addressBook.getAllPersons().stream())
+				.collect(Collectors.groupingBy(ContactPerson::getState));
 	}
 
 	@Override
