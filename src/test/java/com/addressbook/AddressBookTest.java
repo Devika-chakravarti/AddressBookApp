@@ -1,6 +1,7 @@
 package com.addressbook;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -76,6 +77,30 @@ public class AddressBookTest {
 				+ "Last Name    : Sharma\n" + "Address      : Vijay Nagar\n" + "City         : Indore\n"
 				+ "State        : Madhya Pradesh\n" + "Zip          : 452010\n" + "Phone Number : 9999999999\n"
 				+ "Email        : ankit@example.com\n" + "----------------------------\n";
+
+		assertEquals(expected, addressBook.toString());
+	}
+
+	@Test
+	void givenDuplicateContact_WhenAddedToAddressBook_ShouldNotBeAdded() {
+		ContactPerson person1 = new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com");
+
+		ContactPerson duplicatePerson = new ContactPerson("Devika", "Chakravarti", "Other Address", "Other City",
+				"Other State", "111111", "0000000000", "duplicate@example.com");
+
+		AddressBook addressBook = new AddressBook();
+		boolean firstAddResult = addressBook.addContact(person1);
+		boolean duplicateAddResult = addressBook.addContact(duplicatePerson);
+
+		assertTrue(firstAddResult);
+		assertFalse(duplicateAddResult);
+
+		String expected = "ADDRESS BOOK CONTACT DETAILS\n" + "----------------------------\n"
+				+ "First Name   : Devika\n" + "Last Name    : Chakravarti\n" + "Address      : Shivajinagar\n"
+				+ "City         : Katni\n" + "State        : Madhya Pradesh\n" + "Zip          : 483501\n"
+				+ "Phone Number : 9876580098\n" + "Email        : devika@example.com\n"
+				+ "----------------------------\n";
 
 		assertEquals(expected, addressBook.toString());
 	}
