@@ -1,11 +1,16 @@
 package com.addressbook;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
+import com.addressbook.model.ContactPerson;
+import com.addressbook.service.AddressBook;
 import com.addressbook.service.AddressBookSystem;
 
 public class AddressBookSystemTest {
@@ -28,5 +33,48 @@ public class AddressBookSystemTest {
 		boolean result = system.addAddressBook("FamilyBook");
 
 		assertFalse(result);
+	}
+
+	@Test
+	void givenMultipleAddressBooks_WhenSearchByCity_ShouldReturnMatchingPersons() {
+		AddressBookSystem system = new AddressBookSystem();
+
+		system.addAddressBook("FamilyBook");
+		system.addAddressBook("FriendsBook");
+
+		AddressBook familyBook = system.getAddressBook("FamilyBook");
+		AddressBook friendsBook = system.getAddressBook("FriendsBook");
+
+		familyBook.addContact(new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com"));
+
+		friendsBook.addContact(new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Katni", "Madhya Pradesh", "452010",
+				"9999999999", "ankit@example.com"));
+
+		List<ContactPerson> result = system.searchPersonByCity("Katni");
+
+		assertEquals(2, result.size());
+	}
+
+	@Test
+	void givenMultipleAddressBooks_WhenSearchByState_ShouldReturnMatchingPersons() {
+		AddressBookSystem system = new AddressBookSystem();
+
+		system.addAddressBook("FamilyBook");
+		system.addAddressBook("OfficeBook");
+
+		AddressBook familyBook = system.getAddressBook("FamilyBook");
+		AddressBook officeBook = system.getAddressBook("OfficeBook");
+
+		familyBook.addContact(new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com"));
+
+		officeBook.addContact(new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com"));
+
+		List<ContactPerson> result = system.searchPersonByState("Madhya Pradesh");
+
+		assertEquals(1, result.size());
+		assertEquals("Devika", result.get(0).getFirstName());
 	}
 }
