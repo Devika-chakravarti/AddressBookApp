@@ -1,6 +1,8 @@
 package com.addressbook.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.addressbook.model.ContactPerson;
 
@@ -38,6 +40,16 @@ public class AddressBook {
 			}
 		}
 		return false;
+	}
+
+	public List<ContactPerson> getPersonsByCity(String city) {
+		return personList.stream().filter(person -> person.getCity().equalsIgnoreCase(city))
+				.collect(Collectors.toList());
+	}
+
+	public List<ContactPerson> getPersonsByState(String state) {
+		return personList.stream().filter(person -> person.getState().equalsIgnoreCase(state))
+				.collect(Collectors.toList());
 	}
 
 	public boolean isEmpty() {
