@@ -12,7 +12,8 @@ public class ContactPerson {
 	private String phoneNumber;
 	private String email;
 
-	public ContactPerson(String firstName, String lastName, String address, String city, String state, String zip,
+	public ContactPerson(String firstName, String lastName, String address, String city,
+			String state, String zip,
 			String phoneNumber, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -32,6 +33,10 @@ public class ContactPerson {
 		return lastName;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
 	public String getCity() {
 		return city;
 	}
@@ -42,6 +47,14 @@ public class ContactPerson {
 
 	public String getZip() {
 		return zip;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 
 	public void updateDetails(String lastName, String address, String city, String state, String zip,
