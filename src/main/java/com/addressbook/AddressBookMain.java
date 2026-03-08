@@ -1,11 +1,13 @@
 package com.addressbook;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import com.addressbook.model.ContactPerson;
 import com.addressbook.service.AddressBook;
+import com.addressbook.service.AddressBookFileIOService;
 import com.addressbook.service.AddressBookSystem;
 
 public class AddressBookMain {
@@ -13,6 +15,7 @@ public class AddressBookMain {
 	public void start() {
 		Scanner sc = new Scanner(System.in);
 		AddressBookSystem addressBookSystem = new AddressBookSystem();
+		AddressBookFileIOService fileIOService = new AddressBookFileIOService();
 
 		System.out.println("\nWELCOME TO ADDRESS BOOK APP\n");
 
@@ -90,6 +93,8 @@ public class AddressBookMain {
 		System.out.println("8. Sort Entries in an Address Book by City");
 		System.out.println("9. Sort Entries in an Address Book by State");
 		System.out.println("10. Sort Entries in an Address Book by Zip");
+		System.out.println("11. Write Address Book to File");
+		System.out.println("12. Read Address Book from File");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -208,6 +213,36 @@ public class AddressBookMain {
 						System.out.println("----------------------------");
 					}
 				}
+			}
+		} else if (choice == 11) {
+			System.out.print("Enter Address Book Name to Write: ");
+			String addressBookName = sc.nextLine();
+
+			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
+
+			if (addressBook == null) {
+				System.out.println("\nAddress Book not found.");
+			} else {
+				System.out.print("Enter File Name: ");
+				String fileName = sc.nextLine();
+
+				try {
+					fileIOService.writeAddressBookToFile(fileName, addressBookName, addressBook);
+					System.out.println("\nAddress Book written to file successfully.");
+				} catch (IOException e) {
+					System.out.println("\nError while writing to file: " + e.getMessage());
+				}
+			}
+		} else if (choice == 12) {
+			System.out.print("Enter File Name to Read: ");
+			String fileName = sc.nextLine();
+
+			try {
+				String fileContent = fileIOService.readAddressBookFromFile(fileName);
+				System.out.println("\nFILE CONTENT:\n");
+				System.out.println(fileContent);
+			} catch (IOException e) {
+				System.out.println("\nError while reading file: " + e.getMessage());
 			}
 		} else {
 			System.out.println("Invalid choice.");
