@@ -84,6 +84,8 @@ public class AddressBookMain {
 		System.out.println("2. Search by State");
 		System.out.println("3. View Persons Grouped by City");
 		System.out.println("4. View Persons Grouped by State");
+		System.out.println("5. Count Persons by City");
+		System.out.println("6. Count Persons by State");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -145,6 +147,28 @@ public class AddressBookMain {
 						System.out.println(person);
 						System.out.println("----------------------------");
 					}
+				}
+			}
+		} else if (choice == 5) {
+			Map<String, Long> cityCountMap = addressBookSystem.getPersonCountByCity();
+
+			if (cityCountMap.isEmpty()) {
+				System.out.println("\nNo city-wise count data available.");
+			} else {
+				System.out.println("\nCOUNT OF PERSONS BY CITY");
+				for (Map.Entry<String, Long> entry : cityCountMap.entrySet()) {
+					System.out.println(entry.getKey() + " : " + entry.getValue());
+				}
+			}
+		} else if (choice == 6) {
+			Map<String, Long> stateCountMap = addressBookSystem.getPersonCountByState();
+
+			if (stateCountMap.isEmpty()) {
+				System.out.println("\nNo state-wise count data available.");
+			} else {
+				System.out.println("\nCOUNT OF PERSONS BY STATE");
+				for (Map.Entry<String, Long> entry : stateCountMap.entrySet()) {
+					System.out.println(entry.getKey() + " : " + entry.getValue());
 				}
 			}
 		} else {
