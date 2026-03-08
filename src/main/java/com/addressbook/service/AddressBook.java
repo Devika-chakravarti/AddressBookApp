@@ -52,6 +52,10 @@ public class AddressBook {
 				.collect(Collectors.toList());
 	}
 
+	public List<ContactPerson> getAllPersons() {
+		return new ArrayList<>(personList);
+	}
+
 	public boolean isEmpty() {
 		return personList.isEmpty();
 	}
