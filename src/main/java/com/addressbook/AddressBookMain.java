@@ -87,6 +87,9 @@ public class AddressBookMain {
 		System.out.println("5. Count Persons by City");
 		System.out.println("6. Count Persons by State");
 		System.out.println("7. Sort Entries in an Address Book by Person Name");
+		System.out.println("8. Sort Entries in an Address Book by City");
+		System.out.println("9. Sort Entries in an Address Book by State");
+		System.out.println("10. Sort Entries in an Address Book by Zip");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -172,8 +175,8 @@ public class AddressBookMain {
 					System.out.println(entry.getKey() + " : " + entry.getValue());
 				}
 			}
-		} else if (choice == 7) {
-			System.out.print("Enter Address Book Name to Sort: ");
+		} else if (choice >= 7 && choice <= 10) {
+			System.out.print("Enter Address Book Name: ");
 			String addressBookName = sc.nextLine();
 
 			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
@@ -181,12 +184,25 @@ public class AddressBookMain {
 			if (addressBook == null) {
 				System.out.println("\nAddress Book not found.");
 			} else {
-				List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByName();
+				List<ContactPerson> sortedPersons;
+
+				if (choice == 7) {
+					sortedPersons = addressBook.getSortedPersonsByName();
+					System.out.println("\nSORTED CONTACTS BY PERSON NAME");
+				} else if (choice == 8) {
+					sortedPersons = addressBook.getSortedPersonsByCity();
+					System.out.println("\nSORTED CONTACTS BY CITY");
+				} else if (choice == 9) {
+					sortedPersons = addressBook.getSortedPersonsByState();
+					System.out.println("\nSORTED CONTACTS BY STATE");
+				} else {
+					sortedPersons = addressBook.getSortedPersonsByZip();
+					System.out.println("\nSORTED CONTACTS BY ZIP");
+				}
 
 				if (sortedPersons.isEmpty()) {
 					System.out.println("\nAddress Book is empty.");
 				} else {
-					System.out.println("\nSORTED CONTACTS BY PERSON NAME");
 					for (ContactPerson person : sortedPersons) {
 						System.out.println(person);
 						System.out.println("----------------------------");
