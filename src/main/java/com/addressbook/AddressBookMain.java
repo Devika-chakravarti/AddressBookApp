@@ -1,6 +1,7 @@
 package com.addressbook;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.addressbook.model.ContactPerson;
@@ -78,9 +79,11 @@ public class AddressBookMain {
 		System.out.println("\nFINAL ADDRESS BOOK SYSTEM DATA\n");
 		System.out.println(addressBookSystem);
 
-		System.out.println("\nSEARCH MENU");
+		System.out.println("\nMENU");
 		System.out.println("1. Search by City");
 		System.out.println("2. Search by State");
+		System.out.println("3. View Persons Grouped by City");
+		System.out.println("4. View Persons Grouped by State");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -112,6 +115,36 @@ public class AddressBookMain {
 				for (ContactPerson person : stateResult) {
 					System.out.println(person);
 					System.out.println("----------------------------");
+				}
+			}
+		} else if (choice == 3) {
+			Map<String, List<ContactPerson>> cityMap = addressBookSystem.viewPersonsByCity();
+
+			if (cityMap.isEmpty()) {
+				System.out.println("\nNo city-wise person data available.");
+			} else {
+				System.out.println("\nPERSONS GROUPED BY CITY");
+				for (Map.Entry<String, List<ContactPerson>> entry : cityMap.entrySet()) {
+					System.out.println("\nCity: " + entry.getKey());
+					for (ContactPerson person : entry.getValue()) {
+						System.out.println(person);
+						System.out.println("----------------------------");
+					}
+				}
+			}
+		} else if (choice == 4) {
+			Map<String, List<ContactPerson>> stateMap = addressBookSystem.viewPersonsByState();
+
+			if (stateMap.isEmpty()) {
+				System.out.println("\nNo state-wise person data available.");
+			} else {
+				System.out.println("\nPERSONS GROUPED BY STATE");
+				for (Map.Entry<String, List<ContactPerson>> entry : stateMap.entrySet()) {
+					System.out.println("\nState: " + entry.getKey());
+					for (ContactPerson person : entry.getValue()) {
+						System.out.println(person);
+						System.out.println("----------------------------");
+					}
 				}
 			}
 		} else {
