@@ -32,6 +32,14 @@ public class ContactPerson {
 		return lastName;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
 	public void updateDetails(String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
 		this.lastName = lastName;
