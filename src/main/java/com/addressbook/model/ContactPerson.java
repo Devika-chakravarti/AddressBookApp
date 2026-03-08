@@ -40,6 +40,10 @@ public class ContactPerson {
 		return state;
 	}
 
+	public String getZip() {
+		return zip;
+	}
+
 	public void updateDetails(String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
 		this.lastName = lastName;
