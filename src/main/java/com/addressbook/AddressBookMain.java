@@ -86,6 +86,7 @@ public class AddressBookMain {
 		System.out.println("4. View Persons Grouped by State");
 		System.out.println("5. Count Persons by City");
 		System.out.println("6. Count Persons by State");
+		System.out.println("7. Sort Entries in an Address Book by Person Name");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -169,6 +170,27 @@ public class AddressBookMain {
 				System.out.println("\nCOUNT OF PERSONS BY STATE");
 				for (Map.Entry<String, Long> entry : stateCountMap.entrySet()) {
 					System.out.println(entry.getKey() + " : " + entry.getValue());
+				}
+			}
+		} else if (choice == 7) {
+			System.out.print("Enter Address Book Name to Sort: ");
+			String addressBookName = sc.nextLine();
+
+			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
+
+			if (addressBook == null) {
+				System.out.println("\nAddress Book not found.");
+			} else {
+				List<ContactPerson> sortedPersons = addressBook.getSortedPersonsByName();
+
+				if (sortedPersons.isEmpty()) {
+					System.out.println("\nAddress Book is empty.");
+				} else {
+					System.out.println("\nSORTED CONTACTS BY PERSON NAME");
+					for (ContactPerson person : sortedPersons) {
+						System.out.println(person);
+						System.out.println("----------------------------");
+					}
 				}
 			}
 		} else {
