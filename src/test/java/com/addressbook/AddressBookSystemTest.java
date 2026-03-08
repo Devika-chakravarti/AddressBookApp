@@ -124,4 +124,49 @@ public class AddressBookSystemTest {
 		assertEquals(1, stateMap.get("Madhya Pradesh").size());
 		assertEquals(1, stateMap.get("Uttar Pradesh").size());
 	}
+
+	@Test
+	void givenMultipleAddressBooks_WhenCountedByCity_ShouldReturnCorrectCounts() {
+		AddressBookSystem system = new AddressBookSystem();
+
+		system.addAddressBook("FamilyBook");
+		system.addAddressBook("FriendsBook");
+
+		AddressBook familyBook = system.getAddressBook("FamilyBook");
+		AddressBook friendsBook = system.getAddressBook("FriendsBook");
+
+		familyBook.addContact(new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com"));
+
+		friendsBook.addContact(new ContactPerson("Ankit", "Sharma", "Vijay Nagar", "Katni", "Madhya Pradesh", "452010",
+				"9999999999", "ankit@example.com"));
+
+		Map<String, Long> cityCountMap = system.getPersonCountByCity();
+
+		assertEquals(1, cityCountMap.size());
+		assertEquals(2L, cityCountMap.get("Katni"));
+	}
+
+	@Test
+	void givenMultipleAddressBooks_WhenCountedByState_ShouldReturnCorrectCounts() {
+		AddressBookSystem system = new AddressBookSystem();
+
+		system.addAddressBook("FamilyBook");
+		system.addAddressBook("OfficeBook");
+
+		AddressBook familyBook = system.getAddressBook("FamilyBook");
+		AddressBook officeBook = system.getAddressBook("OfficeBook");
+
+		familyBook.addContact(new ContactPerson("Devika", "Chakravarti", "Shivajinagar", "Katni", "Madhya Pradesh",
+				"483501", "9876580098", "devika@example.com"));
+
+		officeBook.addContact(new ContactPerson("Rahul", "Verma", "Sector 21", "Noida", "Uttar Pradesh", "201301",
+				"8888888888", "rahul@example.com"));
+
+		Map<String, Long> stateCountMap = system.getPersonCountByState();
+
+		assertEquals(2, stateCountMap.size());
+		assertEquals(1L, stateCountMap.get("Madhya Pradesh"));
+		assertEquals(1L, stateCountMap.get("Uttar Pradesh"));
+	}
 }
