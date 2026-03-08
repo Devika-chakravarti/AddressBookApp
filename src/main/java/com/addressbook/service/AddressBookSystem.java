@@ -43,6 +43,16 @@ public class AddressBookSystem {
 				.collect(Collectors.groupingBy(ContactPerson::getState));
 	}
 
+	public Map<String, Long> getPersonCountByCity() {
+		return addressBookMap.values().stream().flatMap(addressBook -> addressBook.getAllPersons().stream())
+				.collect(Collectors.groupingBy(ContactPerson::getCity, Collectors.counting()));
+	}
+
+	public Map<String, Long> getPersonCountByState() {
+		return addressBookMap.values().stream().flatMap(addressBook -> addressBook.getAllPersons().stream())
+				.collect(Collectors.groupingBy(ContactPerson::getState, Collectors.counting()));
+	}
+
 	@Override
 	public String toString() {
 		if (addressBookMap.isEmpty()) {
