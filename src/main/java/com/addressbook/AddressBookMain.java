@@ -64,11 +64,17 @@ public class AddressBookMain {
 				ContactPerson person = new ContactPerson(firstName, lastName, address, city, state, zip, phoneNumber,
 						email);
 
-				addressBook.addContact(person);
+				boolean contactAdded = addressBook.addContact(person);
+
+				if (contactAdded) {
+					System.out.println("Contact added successfully.");
+				} else {
+					System.out.println("Duplicate contact found. Contact not added.");
+				}
 			}
 		}
 
-		System.out.println("\nALL ADDRESS BOOKS ADDED SUCCESSFULLY\n");
+		System.out.println("\nFINAL ADDRESS BOOK SYSTEM DATA\n");
 		System.out.println(addressBookSystem);
 
 		sc.close();
