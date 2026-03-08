@@ -1,6 +1,7 @@
 package com.addressbook.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,13 @@ public class AddressBook {
 
 	public List<ContactPerson> getAllPersons() {
 		return new ArrayList<>(personList);
+	}
+
+	public List<ContactPerson> getSortedPersonsByName() {
+		return personList.stream()
+				.sorted(Comparator.comparing(ContactPerson::getFirstName, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getLastName, String.CASE_INSENSITIVE_ORDER))
+				.collect(Collectors.toList());
 	}
 
 	public boolean isEmpty() {
