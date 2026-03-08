@@ -64,6 +64,30 @@ public class AddressBook {
 				.collect(Collectors.toList());
 	}
 
+	public List<ContactPerson> getSortedPersonsByCity() {
+		return personList.stream()
+				.sorted(Comparator.comparing(ContactPerson::getCity, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getFirstName, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getLastName, String.CASE_INSENSITIVE_ORDER))
+				.collect(Collectors.toList());
+	}
+
+	public List<ContactPerson> getSortedPersonsByState() {
+		return personList.stream()
+				.sorted(Comparator.comparing(ContactPerson::getState, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getFirstName, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getLastName, String.CASE_INSENSITIVE_ORDER))
+				.collect(Collectors.toList());
+	}
+
+	public List<ContactPerson> getSortedPersonsByZip() {
+		return personList.stream()
+				.sorted(Comparator.comparing(ContactPerson::getZip)
+						.thenComparing(ContactPerson::getFirstName, String.CASE_INSENSITIVE_ORDER)
+						.thenComparing(ContactPerson::getLastName, String.CASE_INSENSITIVE_ORDER))
+				.collect(Collectors.toList());
+	}
+
 	public boolean isEmpty() {
 		return personList.isEmpty();
 	}
