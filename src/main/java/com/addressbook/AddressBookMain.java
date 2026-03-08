@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.addressbook.model.ContactPerson;
@@ -76,6 +77,46 @@ public class AddressBookMain {
 
 		System.out.println("\nFINAL ADDRESS BOOK SYSTEM DATA\n");
 		System.out.println(addressBookSystem);
+
+		System.out.println("\nSEARCH MENU");
+		System.out.println("1. Search by City");
+		System.out.println("2. Search by State");
+		System.out.print("Enter your choice: ");
+		int choice = Integer.parseInt(sc.nextLine());
+
+		if (choice == 1) {
+			System.out.print("Enter City Name: ");
+			String city = sc.nextLine();
+
+			List<ContactPerson> cityResult = addressBookSystem.searchPersonByCity(city);
+
+			if (cityResult.isEmpty()) {
+				System.out.println("\nNo person found in city: " + city);
+			} else {
+				System.out.println("\nPersons found in city: " + city);
+				for (ContactPerson person : cityResult) {
+					System.out.println(person);
+					System.out.println("----------------------------");
+				}
+			}
+		} else if (choice == 2) {
+			System.out.print("Enter State Name: ");
+			String state = sc.nextLine();
+
+			List<ContactPerson> stateResult = addressBookSystem.searchPersonByState(state);
+
+			if (stateResult.isEmpty()) {
+				System.out.println("\nNo person found in state: " + state);
+			} else {
+				System.out.println("\nPersons found in state: " + state);
+				for (ContactPerson person : stateResult) {
+					System.out.println(person);
+					System.out.println("----------------------------");
+				}
+			}
+		} else {
+			System.out.println("Invalid choice.");
+		}
 
 		sc.close();
 	}
