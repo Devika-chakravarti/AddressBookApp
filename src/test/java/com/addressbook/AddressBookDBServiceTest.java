@@ -21,4 +21,30 @@ public class AddressBookDBServiceTest {
 		assertNotNull(contacts);
 		assertTrue(contacts.size() >= 0);
 	}
+
+	@Test
+	void givenUpdatedContact_WhenUpdatedInDB_ShouldReturnTrue() {
+		AddressBookDBService dbService = new AddressBookDBService();
+
+		ContactPerson updatedPerson = new ContactPerson("Devika", "UpdatedLastName", "UpdatedAddress", "UpdatedCity",
+				"UpdatedState", "123456", "9999999999", "updated@example.com");
+
+		boolean result = dbService.updateContactInDB(updatedPerson);
+
+		assertTrue(result);
+	}
+
+	@Test
+	void givenUpdatedContact_WhenCheckedAgainstDB_ShouldBeInSync() {
+		AddressBookDBService dbService = new AddressBookDBService();
+
+		ContactPerson updatedPerson = new ContactPerson("Devika", "UpdatedLastName", "UpdatedAddress", "UpdatedCity",
+				"UpdatedState", "123456", "9999999999", "updated@example.com");
+
+		dbService.updateContactInDB(updatedPerson);
+
+		boolean isInSync = dbService.isContactInSyncWithDB(updatedPerson);
+
+		assertTrue(isInSync);
+	}
 }
