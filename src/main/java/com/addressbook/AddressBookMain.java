@@ -8,6 +8,7 @@ import java.util.Scanner;
 import com.addressbook.model.ContactPerson;
 import com.addressbook.service.AddressBook;
 import com.addressbook.service.AddressBookCSVService;
+import com.addressbook.service.AddressBookDBService;
 import com.addressbook.service.AddressBookFileIOService;
 import com.addressbook.service.AddressBookJSONService;
 import com.addressbook.service.AddressBookSystem;
@@ -20,6 +21,7 @@ public class AddressBookMain {
 		AddressBookFileIOService fileIOService = new AddressBookFileIOService();
 		AddressBookCSVService csvService = new AddressBookCSVService();
 		AddressBookJSONService jsonService = new AddressBookJSONService();
+		AddressBookDBService dbService = new AddressBookDBService();
 
 		System.out.println("\nWELCOME TO ADDRESS BOOK APP\n");
 
@@ -103,6 +105,7 @@ public class AddressBookMain {
 		System.out.println("14. Read Address Book from CSV");
 		System.out.println("15. Write Address Book to JSON");
 		System.out.println("16. Read Address Book from JSON");
+		System.out.println("17. Retrieve All Contacts From MySQL DB");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -225,7 +228,6 @@ public class AddressBookMain {
 		} else if (choice == 11) {
 			System.out.print("Enter Address Book Name to Write: ");
 			String addressBookName = sc.nextLine();
-
 			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
 
 			if (addressBook == null) {
@@ -255,7 +257,6 @@ public class AddressBookMain {
 		} else if (choice == 13) {
 			System.out.print("Enter Address Book Name to Write as CSV: ");
 			String addressBookName = sc.nextLine();
-
 			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
 
 			if (addressBook == null) {
@@ -285,7 +286,6 @@ public class AddressBookMain {
 		} else if (choice == 15) {
 			System.out.print("Enter Address Book Name to Write as JSON: ");
 			String addressBookName = sc.nextLine();
-
 			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
 
 			if (addressBook == null) {
@@ -319,6 +319,18 @@ public class AddressBookMain {
 				}
 			} catch (IOException e) {
 				System.out.println("\nError while reading JSON file: " + e.getMessage());
+			}
+		} else if (choice == 17) {
+			List<ContactPerson> dbContacts = dbService.getAllContactsFromDB();
+
+			if (dbContacts.isEmpty()) {
+				System.out.println("\nNo contacts found in database.");
+			} else {
+				System.out.println("\nCONTACTS RETRIEVED FROM MYSQL DB\n");
+				for (ContactPerson person : dbContacts) {
+					System.out.println(person);
+					System.out.println("----------------------------");
+				}
 			}
 		} else {
 			System.out.println("Invalid choice.");
