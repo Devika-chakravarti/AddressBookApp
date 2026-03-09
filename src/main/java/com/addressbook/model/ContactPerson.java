@@ -12,8 +12,7 @@ public class ContactPerson {
 	private String phoneNumber;
 	private String email;
 
-	public ContactPerson(String firstName, String lastName, String address, String city,
-			String state, String zip,
+	public ContactPerson(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -78,12 +77,15 @@ public class ContactPerson {
 		}
 
 		ContactPerson other = (ContactPerson) obj;
-		return firstName.equalsIgnoreCase(other.firstName) && lastName.equalsIgnoreCase(other.lastName);
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(address, other.address) && Objects.equals(city, other.city)
+				&& Objects.equals(state, other.state) && Objects.equals(zip, other.zip)
+				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(email, other.email);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstName.toLowerCase(), lastName.toLowerCase());
+		return Objects.hash(firstName, lastName, address, city, state, zip, phoneNumber, email);
 	}
 
 	@Override
