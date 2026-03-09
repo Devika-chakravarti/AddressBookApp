@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 import com.addressbook.model.ContactPerson;
 import com.addressbook.service.AddressBook;
+import com.addressbook.service.AddressBookCSVService;
 import com.addressbook.service.AddressBookFileIOService;
+import com.addressbook.service.AddressBookJSONService;
 import com.addressbook.service.AddressBookSystem;
 
 public class AddressBookMain {
@@ -16,6 +18,8 @@ public class AddressBookMain {
 		Scanner sc = new Scanner(System.in);
 		AddressBookSystem addressBookSystem = new AddressBookSystem();
 		AddressBookFileIOService fileIOService = new AddressBookFileIOService();
+		AddressBookCSVService csvService = new AddressBookCSVService();
+		AddressBookJSONService jsonService = new AddressBookJSONService();
 
 		System.out.println("\nWELCOME TO ADDRESS BOOK APP\n");
 
@@ -95,6 +99,10 @@ public class AddressBookMain {
 		System.out.println("10. Sort Entries in an Address Book by Zip");
 		System.out.println("11. Write Address Book to File");
 		System.out.println("12. Read Address Book from File");
+		System.out.println("13. Write Address Book to CSV");
+		System.out.println("14. Read Address Book from CSV");
+		System.out.println("15. Write Address Book to JSON");
+		System.out.println("16. Read Address Book from JSON");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -243,6 +251,74 @@ public class AddressBookMain {
 				System.out.println(fileContent);
 			} catch (IOException e) {
 				System.out.println("\nError while reading file: " + e.getMessage());
+			}
+		} else if (choice == 13) {
+			System.out.print("Enter Address Book Name to Write as CSV: ");
+			String addressBookName = sc.nextLine();
+
+			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
+
+			if (addressBook == null) {
+				System.out.println("\nAddress Book not found.");
+			} else {
+				System.out.print("Enter CSV File Name: ");
+				String fileName = sc.nextLine();
+
+				try {
+					csvService.writeAddressBookToCSV(fileName, addressBook);
+					System.out.println("\nAddress Book written to CSV successfully.");
+				} catch (IOException e) {
+					System.out.println("\nError while writing CSV file: " + e.getMessage());
+				}
+			}
+		} else if (choice == 14) {
+			System.out.print("Enter CSV File Name to Read: ");
+			String fileName = sc.nextLine();
+
+			try {
+				String csvContent = csvService.readAddressBookFromCSV(fileName);
+				System.out.println("\nCSV FILE CONTENT:\n");
+				System.out.println(csvContent);
+			} catch (IOException e) {
+				System.out.println("\nError while reading CSV file: " + e.getMessage());
+			}
+		} else if (choice == 15) {
+			System.out.print("Enter Address Book Name to Write as JSON: ");
+			String addressBookName = sc.nextLine();
+
+			AddressBook addressBook = addressBookSystem.getAddressBook(addressBookName);
+
+			if (addressBook == null) {
+				System.out.println("\nAddress Book not found.");
+			} else {
+				System.out.print("Enter JSON File Name: ");
+				String fileName = sc.nextLine();
+
+				try {
+					jsonService.writeAddressBookToJSON(fileName, addressBook);
+					System.out.println("\nAddress Book written to JSON successfully.");
+				} catch (IOException e) {
+					System.out.println("\nError while writing JSON file: " + e.getMessage());
+				}
+			}
+		} else if (choice == 16) {
+			System.out.print("Enter JSON File Name to Read: ");
+			String fileName = sc.nextLine();
+
+			try {
+				List<ContactPerson> persons = jsonService.readAddressBookFromJSON(fileName);
+
+				System.out.println("\nJSON FILE CONTENT:\n");
+				if (persons == null || persons.isEmpty()) {
+					System.out.println("No contacts found.");
+				} else {
+					for (ContactPerson person : persons) {
+						System.out.println(person);
+						System.out.println("----------------------------");
+					}
+				}
+			} catch (IOException e) {
+				System.out.println("\nError while reading JSON file: " + e.getMessage());
 			}
 		} else {
 			System.out.println("Invalid choice.");
