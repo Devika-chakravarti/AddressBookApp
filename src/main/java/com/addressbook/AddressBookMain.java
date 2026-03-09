@@ -106,6 +106,7 @@ public class AddressBookMain {
 		System.out.println("15. Write Address Book to JSON");
 		System.out.println("16. Read Address Book from JSON");
 		System.out.println("17. Retrieve All Contacts From MySQL DB");
+		System.out.println("18. Update Contact In MySQL DB And Check Sync");
 		System.out.print("Enter your choice: ");
 		int choice = Integer.parseInt(sc.nextLine());
 
@@ -331,6 +332,49 @@ public class AddressBookMain {
 					System.out.println(person);
 					System.out.println("----------------------------");
 				}
+			}
+		} else if (choice == 18) {
+			System.out.print("Enter First Name of Contact to Update in DB: ");
+			String firstName = sc.nextLine();
+
+			System.out.print("Enter New Last Name: ");
+			String lastName = sc.nextLine();
+
+			System.out.print("Enter New Address: ");
+			String address = sc.nextLine();
+
+			System.out.print("Enter New City: ");
+			String city = sc.nextLine();
+
+			System.out.print("Enter New State: ");
+			String state = sc.nextLine();
+
+			System.out.print("Enter New Zip: ");
+			String zip = sc.nextLine();
+
+			System.out.print("Enter New Phone Number: ");
+			String phoneNumber = sc.nextLine();
+
+			System.out.print("Enter New Email: ");
+			String email = sc.nextLine();
+
+			ContactPerson updatedPerson = new ContactPerson(firstName, lastName, address, city, state, zip, phoneNumber,
+					email);
+
+			boolean isUpdated = dbService.updateContactInDB(updatedPerson);
+
+			if (isUpdated) {
+				System.out.println("\nContact updated in DB successfully.");
+
+				boolean isInSync = dbService.isContactInSyncWithDB(updatedPerson);
+
+				if (isInSync) {
+					System.out.println("Contact information is in sync with DB.");
+				} else {
+					System.out.println("Contact information is NOT in sync with DB.");
+				}
+			} else {
+				System.out.println("\nNo contact found to update.");
 			}
 		} else {
 			System.out.println("Invalid choice.");
