@@ -14,7 +14,7 @@ public class AddressBookDBService {
 	public List<ContactPerson> getAllContactsFromDB() {
 		List<ContactPerson> contactList = new ArrayList<>();
 
-		String query = "SELECT first_name, last_name, address, city, state, zip, phone_number, email FROM contact_person";
+		String query = "SELECT first_name, last_name, address, city, state, zip, phone_number, email, date_added FROM contact_person";
 
 		try (Connection connection = DBConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -24,7 +24,7 @@ public class AddressBookDBService {
 				ContactPerson person = new ContactPerson(resultSet.getString("first_name"),
 						resultSet.getString("last_name"), resultSet.getString("address"), resultSet.getString("city"),
 						resultSet.getString("state"), resultSet.getString("zip"), resultSet.getString("phone_number"),
-						resultSet.getString("email"));
+						resultSet.getString("email"), resultSet.getString("date_added"));
 
 				contactList.add(person);
 			}
@@ -59,7 +59,7 @@ public class AddressBookDBService {
 	}
 
 	public ContactPerson getContactByFirstName(String firstName) {
-		String query = "SELECT first_name, last_name, address, city, state, zip, phone_number, email FROM contact_person WHERE first_name = ?";
+		String query = "SELECT first_name, last_name, address, city, state, zip, phone_number, email, date_added FROM contact_person WHERE first_name = ?";
 
 		try (Connection connection = DBConnection.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -71,7 +71,7 @@ public class AddressBookDBService {
 					return new ContactPerson(resultSet.getString("first_name"), resultSet.getString("last_name"),
 							resultSet.getString("address"), resultSet.getString("city"), resultSet.getString("state"),
 							resultSet.getString("zip"), resultSet.getString("phone_number"),
-							resultSet.getString("email"));
+							resultSet.getString("email"), resultSet.getString("date_added"));
 				}
 			}
 		} catch (Exception e) {
@@ -84,5 +84,35 @@ public class AddressBookDBService {
 	public boolean isContactInSyncWithDB(ContactPerson person) {
 		ContactPerson dbPerson = getContactByFirstName(person.getFirstName());
 		return person.equals(dbPerson);
+	}
+
+	public List<ContactPerson> getContactsAddedBetweenDates(String startDate, String endDate) {
+		List<ContactPerson> contactList = new ArrayList<>();
+
+		String query = "SELECT first_name, last_name, address, city, state, zip, phone_number, email, date_added "
+				+ "FROM contact_person WHERE date_added BETWEEN ? AND ?";
+
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+			preparedStatement.setString(1, startDate);
+			preparedStatement.setString(2, endDate);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					ContactPerson person = new ContactPerson(resultSet.getString("first_name"),
+							resultSet.getString("last_name"), resultSet.getString("address"),
+							resultSet.getString("city"), resultSet.getString("state"), resultSet.getString("zip"),
+							resultSet.getString("phone_number"), resultSet.getString("email"),
+							resultSet.getString("date_added"));
+
+					contactList.add(person);
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Unable to retrieve contacts added in a particular period", e);
+		}
+
+		return contactList;
 	}
 }
