@@ -3,6 +3,7 @@ package com.addressbook.model;
 import java.util.Objects;
 
 public class ContactPerson {
+
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -11,6 +12,10 @@ public class ContactPerson {
 	private String zip;
 	private String phoneNumber;
 	private String email;
+	private String dateAdded;
+
+	public ContactPerson() {
+	}
 
 	public ContactPerson(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String email) {
@@ -24,36 +29,17 @@ public class ContactPerson {
 		this.email = email;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public String getZip() {
-		return zip;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getEmail() {
-		return email;
+	public ContactPerson(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNumber, String email, String dateAdded) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.dateAdded = dateAdded;
 	}
 
 	public void updateDetails(String lastName, String address, String city, String state, String zip,
@@ -67,31 +53,101 @@ public class ContactPerson {
 		this.email = email;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof ContactPerson)) {
-			return false;
-		}
+	public String getFirstName() {
+		return firstName;
+	}
 
-		ContactPerson other = (ContactPerson) obj;
-		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
-				&& Objects.equals(address, other.address) && Objects.equals(city, other.city)
-				&& Objects.equals(state, other.state) && Objects.equals(zip, other.zip)
-				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(email, other.email);
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getDateAdded() {
+		return dateAdded;
+	}
+
+	public void setDateAdded(String dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstName, lastName, address, city, state, zip, phoneNumber, email);
+		return Objects.hash(address, city, dateAdded, email, firstName, lastName, phoneNumber, state, zip);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		ContactPerson other = (ContactPerson) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(address, other.address) && Objects.equals(city, other.city)
+				&& Objects.equals(state, other.state) && Objects.equals(zip, other.zip)
+				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(email, other.email)
+				&& Objects.equals(dateAdded, other.dateAdded);
 	}
 
 	@Override
 	public String toString() {
-		return "First Name   : " + firstName + "\n" + "Last Name    : " + lastName + "\n" + "Address      : " + address
-				+ "\n" + "City         : " + city + "\n" + "State        : " + state + "\n" + "Zip          : " + zip
-				+ "\n" + "Phone Number : " + phoneNumber + "\n" + "Email        : " + email;
+		return "ContactPerson [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city="
+				+ city + ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email
+				+ ", dateAdded=" + dateAdded + "]";
 	}
 }
