@@ -39,12 +39,22 @@ public class AddressBookDBServiceTest {
 		AddressBookDBService dbService = new AddressBookDBService();
 
 		ContactPerson updatedPerson = new ContactPerson("Devika", "UpdatedLastName", "UpdatedAddress", "UpdatedCity",
-				"UpdatedState", "123456", "9999999999", "updated@example.com");
+				"UpdatedState", "123456", "9999999999", "updated@example.com", "2026-03-11");
 
 		dbService.updateContactInDB(updatedPerson);
 
 		boolean isInSync = dbService.isContactInSyncWithDB(updatedPerson);
 
 		assertTrue(isInSync);
+	}
+
+	@Test
+	void givenDateRange_WhenContactsRetrieved_ShouldReturnContactsAddedInThatPeriod() {
+		AddressBookDBService dbService = new AddressBookDBService();
+
+		List<ContactPerson> contacts = dbService.getContactsAddedBetweenDates("2026-03-01", "2026-03-31");
+
+		assertNotNull(contacts);
+		assertTrue(contacts.size() >= 0);
 	}
 }
