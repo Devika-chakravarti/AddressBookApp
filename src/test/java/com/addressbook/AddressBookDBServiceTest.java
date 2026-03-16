@@ -39,13 +39,21 @@ public class AddressBookDBServiceTest {
 		AddressBookDBService dbService = new AddressBookDBService();
 
 		ContactPerson updatedPerson = new ContactPerson("Devika", "UpdatedLastName", "UpdatedAddress", "UpdatedCity",
-				"UpdatedState", "123456", "9999999999", "updated@example.com", "2026-03-11");
+				"UpdatedState", "123456", "9999999999", "updated@example.com");
 
 		dbService.updateContactInDB(updatedPerson);
 
-		boolean isInSync = dbService.isContactInSyncWithDB(updatedPerson);
+		ContactPerson personFromDB = dbService.getContactByFirstName("Devika");
 
-		assertTrue(isInSync);
+		assertNotNull(personFromDB);
+		assertTrue(updatedPerson.getFirstName().equals(personFromDB.getFirstName()));
+		assertTrue(updatedPerson.getLastName().equals(personFromDB.getLastName()));
+		assertTrue(updatedPerson.getAddress().equals(personFromDB.getAddress()));
+		assertTrue(updatedPerson.getCity().equals(personFromDB.getCity()));
+		assertTrue(updatedPerson.getState().equals(personFromDB.getState()));
+		assertTrue(updatedPerson.getZip().equals(personFromDB.getZip()));
+		assertTrue(updatedPerson.getPhoneNumber().equals(personFromDB.getPhoneNumber()));
+		assertTrue(updatedPerson.getEmail().equals(personFromDB.getEmail()));
 	}
 
 	@Test
@@ -56,5 +64,23 @@ public class AddressBookDBServiceTest {
 
 		assertNotNull(contacts);
 		assertTrue(contacts.size() >= 0);
+	}
+
+	@Test
+	void givenCity_WhenCountRetrieved_ShouldReturnNumberOfContacts() {
+		AddressBookDBService dbService = new AddressBookDBService();
+
+		int count = dbService.getContactCountByCity("Bhopal");
+
+		assertTrue(count >= 0);
+	}
+
+	@Test
+	void givenState_WhenCountRetrieved_ShouldReturnNumberOfContacts() {
+		AddressBookDBService dbService = new AddressBookDBService();
+
+		int count = dbService.getContactCountByState("Madhya Pradesh");
+
+		assertTrue(count >= 0);
 	}
 }
