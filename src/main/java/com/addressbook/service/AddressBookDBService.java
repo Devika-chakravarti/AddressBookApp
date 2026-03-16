@@ -115,4 +115,44 @@ public class AddressBookDBService {
 
 		return contactList;
 	}
+
+	public int getContactCountByCity(String city) {
+		String query = "SELECT COUNT(*) AS contact_count FROM contact_person WHERE city = ?";
+
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+			preparedStatement.setString(1, city);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getInt("contact_count");
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Unable to retrieve contact count by city", e);
+		}
+
+		return 0;
+	}
+
+	public int getContactCountByState(String state) {
+		String query = "SELECT COUNT(*) AS contact_count FROM contact_person WHERE state = ?";
+
+		try (Connection connection = DBConnection.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+			preparedStatement.setString(1, state);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getInt("contact_count");
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Unable to retrieve contact count by state", e);
+		}
+
+		return 0;
+	}
 }
